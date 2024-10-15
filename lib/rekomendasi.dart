@@ -18,79 +18,88 @@ class Rekomendasi extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Situs Rekomendasi'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // YouTube Link
-            InkWell(
-              onTap: () => _launchURL('https://www.youtube.com'),
-              child: Row(
-                children: const [
-                  Icon(Icons.video_library, color: Colors.red),
-                  SizedBox(width: 10),
-                  Text(
-                    'YouTube',
-                    style: TextStyle(
-                        fontSize: 20, decoration: TextDecoration.underline),
+      body: Column(
+        children: [
+          const SizedBox(height: 5),
+          // Header with Image and Text in a horizontal ListView
+          SizedBox(
+            height: 50,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: const [
+                SizedBox(width: 10),
+                Center(
+                  child: Text(
+                    'Website dengan UI yang bagus',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            const SizedBox(height: 20),
+          ),
+          const SizedBox(height: 10),
 
-            // Pinterest Link
-            InkWell(
-              onTap: () => _launchURL('https://www.pinterest.com'),
-              child: Row(
-                children: const [
-                  Icon(Icons.photo, color: Colors.redAccent),
-                  SizedBox(width: 10),
-                  Text(
-                    'Pinterest',
-                    style: TextStyle(
-                        fontSize: 20, decoration: TextDecoration.underline),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // GitHub Link
-            InkWell(
-              onTap: () => _launchURL('https://www.github.com'),
-              child: Row(
-                children: const [
-                  Icon(Icons.code, color: Colors.black),
-                  SizedBox(width: 10),
-                  Text(
-                    'GitHub',
-                    style: TextStyle(
-                        fontSize: 20, decoration: TextDecoration.underline),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // Instagram Link
-            InkWell(
-              onTap: () => _launchURL('https://www.instagram.com'),
-              child: const Row(
+          // Expanded GridView for recommendations
+          Expanded(
+            child: Center(
+              child: GridView.count(
+                crossAxisCount: 2, // Number of items per row
+                childAspectRatio: 1 / 1.5, // Adjust the aspect ratio
+                padding: const EdgeInsets.all(16),
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
                 children: [
-                  Icon(Icons.photo_camera, color: Colors.purple),
-                  SizedBox(width: 10),
-                  Text(
-                    'Instagram',
-                    style: TextStyle(
-                        fontSize: 20, decoration: TextDecoration.underline),
-                  ),
+                  _buildRecommendationItem(
+                      context,
+                      'YouTube',
+                      'https://www.youtube.com',
+                      Image.network(src),
+                      Colors.red),
+                  _buildRecommendationItem(
+                      context,
+                      'Pinterest',
+                      'https://www.pinterest.com',
+                      Icons.photo,
+                      Colors.redAccent),
+                  _buildRecommendationItem(context, 'GitHub',
+                      'https://www.github.com', Icons.code, Colors.black),
+                  _buildRecommendationItem(
+                      context,
+                      'Instagram',
+                      'https://www.instagram.com',
+                      Icons.photo_camera,
+                      Colors.purple),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
+    );
+  }
+
+  // Reusable method for building each recommendation item
+  Widget _buildRecommendationItem(BuildContext context, String siteName,
+      String url, IconData icon, Color iconColor) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 50, color: iconColor),
+        const SizedBox(height: 10),
+        Text(siteName, style: const TextStyle(fontSize: 16)),
+        const SizedBox(height: 10),
+        ElevatedButton(
+          onPressed: () {
+            _launchURL(url);
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            fixedSize: const Size(100, 20),
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+          ),
+          child: const Text('Visit', style: TextStyle(color: Colors.white)),
+        ),
+      ],
     );
   }
 }
