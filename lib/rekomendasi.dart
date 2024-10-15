@@ -53,7 +53,7 @@ class Rekomendasi extends StatelessWidget {
                       context,
                       'YouTube',
                       'https://www.youtube.com',
-                      Image.network(src),
+                      Icons.play_arrow_outlined,
                       Colors.red),
                   _buildRecommendationItem(
                       context,
